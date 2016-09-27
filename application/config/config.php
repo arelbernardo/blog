@@ -17,7 +17,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
-$config['base_url'] = '';
+/*local*/
+$config['base_url'] = 'http://localhost:8080/blog/';
+/*cloud*/
+/*$config['base_url'] = 'http://';*/
 
 /*
 |--------------------------------------------------------------------------
@@ -109,7 +112,7 @@ $config['enable_hooks'] = FALSE;
 | http://codeigniter.com/user_guide/general/creating_libraries.html
 |
 */
-$config['subclass_prefix'] = 'MY_';
+$config['subclass_prefix'] = 'Base_';
 
 /*
 |--------------------------------------------------------------------------
@@ -498,3 +501,17 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+
+function my_autoloader($class) {
+    if (file_exists($file = APPPATH . 'core/' . $class . '.php'))
+    {
+        include $file;
+    }
+    elseif (file_exists($file = APPPATH . 'libraries/' . $class . '.php'))
+    {
+        include $file;
+    }
+}
+
+spl_autoload_register('my_autoloader');
